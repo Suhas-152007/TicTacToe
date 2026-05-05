@@ -1,43 +1,52 @@
+import java.util.Random;
+
 public class TicTacToe {
 
-    static char[][] board = new char[3][3];
+    static char[][] board = {
+        {'-', '-', '-'},
+        {'-', '-', '-'},
+        {'-', '-', '-'}
+    };
+
+    static char computerSymbol = 'O';
 
     public static void main(String[] args) {
-
-        // Initialize board with empty spaces
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
-            }
-        }
-
-        // Example move
-        placeMove(0, 0, 'X');
-
-        // Print board
+        computerMove();
         printBoard();
     }
 
-    // UC6: Place Move on Board
+    // UC6 reused here
     static void placeMove(int row, int col, char symbol) {
-
-        // Check if position is valid
-        if (row < 0 || row >= 3 || col < 0 || col >= 3) {
-            System.out.println("Invalid position!");
-            return;
+        if (board[row][col] == '-') {
+            board[row][col] = symbol;
         }
-
-        // Check if cell is already filled
-        if (board[row][col] != '-') {
-            System.out.println("Cell already occupied!");
-            return;
-        }
-
-        // Place the symbol
-        board[row][col] = symbol;
     }
 
-    // Helper method to print board
+    // UC7: Computer makes random move
+    static void computerMove() {
+
+        Random rand = new Random();
+        int row, col;
+
+        // Loop until valid move found
+        while (true) {
+
+            int slot = rand.nextInt(9) + 1; // 1 to 9
+
+            // Convert slot → row & col
+            row = (slot - 1) / 3;
+            col = (slot - 1) % 3;
+
+            // Check if empty
+            if (board[row][col] == '-') {
+                placeMove(row, col, computerSymbol);
+                System.out.println("Computer placed at position: " + slot);
+                break;
+            }
+        }
+    }
+
+    // Print board
     static void printBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
