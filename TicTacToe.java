@@ -1,46 +1,49 @@
-// TicTacToe
-// UC5: Validates whether a move is inside the board boundaries
-// and whether the selected cell is empty.
-
 public class TicTacToe {
 
-    // 3x3 board initialization with empty cells '-'
-    static char[][] board = {
-        {'-', '-', '-'},
-        {'-', '-', '-'},
-        {'-', '-', '-'}
-    };
+    static char[][] board = new char[3][3];
 
-    // Entry point of the program
     public static void main(String[] args) {
 
-        int row = 1;
-        int col = 1;
+        // Initialize board with empty spaces
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = '-';
+            }
+        }
 
-        // Test the validation method
-        boolean result = isValidMove(row, col);
+        // Example move
+        placeMove(0, 0, 'X');
 
-        System.out.println("Is move valid? " + result);
+        // Print board
+        printBoard();
     }
 
-    /**
-     * Checks if the given row and column are within bounds
-     * and if the target cell is empty.
-     * Input: row, column
-     * Output: true if valid, false otherwise
-     */
-    static boolean isValidMove(int row, int col) {
+    // UC6: Place Move on Board
+    static void placeMove(int row, int col, char symbol) {
 
-        // Boundary check (0 to 2)
-        if (row < 0 || row > 2 || col < 0 || col > 2) {
-            return false;
+        // Check if position is valid
+        if (row < 0 || row >= 3 || col < 0 || col >= 3) {
+            System.out.println("Invalid position!");
+            return;
         }
 
-        // Check if cell is empty
+        // Check if cell is already filled
         if (board[row][col] != '-') {
-            return false;
+            System.out.println("Cell already occupied!");
+            return;
         }
 
-        return true;
+        // Place the symbol
+        board[row][col] = symbol;
+    }
+
+    // Helper method to print board
+    static void printBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
